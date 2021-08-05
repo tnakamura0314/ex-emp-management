@@ -23,7 +23,7 @@ public class AdministratorRepository {
 	private NamedParameterJdbcTemplate template;
 
 	/**
-	 * Administratorオブジェクトを生成するローマッパー.
+	 * Administratorオブジェクトを生成するローマッパー
 	 */
 	private static final RowMapper<Administrator> ADMINISTRATOR_ROW_MAPPER = (rs, i) -> {
 
@@ -54,7 +54,8 @@ public class AdministratorRepository {
 	}
 
 	/**
-	 * メールアドレスとパスワードから1件の管理者情報を取得する メールアドレスが一意のため
+	 * メールアドレスとパスワードから1件の管理者情報を取得する　(メールアドレスが一意のため)
+	 * また、1件も存在しない場合はnullを返す
 	 * 
 	 * @param mailAddress メールアドレス
 	 * @param password    パスワード
@@ -70,6 +71,7 @@ public class AdministratorRepository {
 		if (administrator == null) {
 			return null;
 		}
+		
 		return administrator;
 
 	}
