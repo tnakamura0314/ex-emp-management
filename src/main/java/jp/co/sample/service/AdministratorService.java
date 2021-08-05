@@ -22,7 +22,6 @@ public class AdministratorService {
 	
 	/**
 	 * 管理者情報を登録するメソッド.<br>
-	 * administratorRepositoryのinsert()メソッドを呼ぶ処理
 	 * 
 	 * @param administrator　
 	 */
@@ -37,7 +36,7 @@ public class AdministratorService {
 	 * 
 	 * @param mailAddress メールアドレス
 	 * @param password　パスワード
-	 * @return　AdministratorRepositoryのfindByMailAddressAndPassword()メソッドから受け取った管理者情報を返す
+	 * @return　管理者情報
 	 */
 	public Administrator login(String mailAddress, String password) {
 		

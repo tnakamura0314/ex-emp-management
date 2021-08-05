@@ -1,8 +1,11 @@
 package jp.co.sample.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,34 +26,32 @@ public class AdministratorController {
 
 	@Autowired
 	private AdministratorService administratorService;
-	
+
 	@ModelAttribute
 	public LoginForm setUpLoginForm() {
 		return new LoginForm();
 	}
 
-	/**
-	 * InsertAdministratorFormオブジェクトを自動でModelオブジェクトに格納するメソッド.
-	 * 
-	 * @return
-	 */
+	@Autowired
+	private HttpSession session;
+
 	@ModelAttribute
 	public InsertAdministratorForm setUpInsertAdministratorForm() {
 		return new InsertAdministratorForm();
 	}
 
 	/**
-	 * administrator/insert.htmlにフォワードするメソッド.
+	 * 管理者登録画面にフォワードするメソッド.
 	 * 
-	 * @return administrator/insert.htmlを返す
+	 * @return 管理者登録画面
 	 */
 	@RequestMapping("/toInsert")
 	public String toInsert() {
-		return "administrator/insert.html";
+		return "administrator/insert";
 	}
 
 	/**
-	 * 管理者情報を登録するinsertメソッド.
+	 * 管理者情報を登録する.
 	 * 
 	 * @param form 管理者情報登録時に使用するフォーム
 	 * @return ログイン画面にリダイレクト
@@ -65,15 +66,40 @@ public class AdministratorController {
 
 		return "redirect:/";
 	}
-	
+
 	/**
-	 * administrator/login.htmlにフォワードするメソッド.
+	 * ログイン画面にフォワードするメソッド.
 	 * 
-	 * @return administrator/login.htmlにフォワード
+	 * @return ログイン画面
 	 */
 	@RequestMapping("/")
 	public String toLogin() {
-		return "administrator/login.html";
+		return "administrator/login";
+	}
+
+	/**
+	 * ログイン後のページにユーザ名を表示するメソッド.
+	 * 
+	 * @param form ログイン時に使用するフォーム
+	 * @param model requestスコープ
+	 * @return 従業員情報一覧ページにフォワード(戻り値がnullの場合は)
+	 */
+	@RequestMapping("/login")
+	public String login(LoginForm form, Model model) {
+
+		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
+
+		model.addAttribute("administrator", administrator);
+		
+		if(administrator == null) {
+			model.addAttribute("administrator", "メールアドレスまたはパスワードが不正です。");
+			return "administrator/login";
+		}
+		
+		session.setAttribute("administratorName", administrator);
+		
+		return "forward:/employee/showList";
+	
 	}
 
 }
