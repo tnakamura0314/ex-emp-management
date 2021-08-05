@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jp.co.sample.repository.AdministratorRepository;
 
 /**
- * Administratorのサービスクラス.
+ * 管理者情報を操作するサービスクラス.
  * 
  * @author nakamuratomoya
  *

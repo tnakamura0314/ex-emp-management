@@ -1,7 +1,7 @@
 package jp.co.sample.form;
 
 /**
- * InsertAdministratorフォーム.
+ * 管理者情報登録時に使用するフォームクラス.
  * 
  * @author nakamuratomoya
  *
