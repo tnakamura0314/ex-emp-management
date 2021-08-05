@@ -82,7 +82,7 @@ public class AdministratorController {
 	 * 
 	 * @param form ログイン時に使用するフォーム
 	 * @param model requestスコープ
-	 * @return 従業員情報一覧ページにフォワード(戻り値がnullの場合は)
+	 * @return 従業員情報一覧ページ
 	 */
 	@RequestMapping("/login")
 	public String login(LoginForm form, Model model) {
