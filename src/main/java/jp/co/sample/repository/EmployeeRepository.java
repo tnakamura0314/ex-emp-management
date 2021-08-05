@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import jp.co.sample.domain.Employee;
 
 /**
- * employeesテーブルを操作するリポジトリ
+ * employeesテーブルを操作するリポジトリ.
  * 
  * @author nakamuratomoya
  *
@@ -50,7 +50,7 @@ public class EmployeeRepository {
 	
 	
 	/**
-	 * 従業員一覧情報を入社日順（降順）で取得する
+	 * 従業員一覧情報を入社日順（降順）で取得する.<br>
 	 * また、従業員が存在しない場合にはサイズ０件の従業員一覧を返す
 	 * 
 	 * @return　従業員一覧情報
@@ -70,7 +70,7 @@ public class EmployeeRepository {
 	}
 	
 	/**
-	 * 主キーから従業員情報を取得する
+	 * 主キーから従業員情報を取得する.<br>
 	 * 従業員が存在しない場合は、Springが自動的に例外を発生させます
 	 * 
 	 * @param id ID
@@ -89,7 +89,7 @@ public class EmployeeRepository {
 	
 	
 	/**
-	 * 従業員の情報を更新する
+	 * 従業員の情報を更新する.<br>
 	 * また、IDカラムを除いた全てのカラムを更新できるSQL文
 	 * 
 	 * @param employee　従業員ドメイン

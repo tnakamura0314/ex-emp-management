@@ -1,5 +1,7 @@
 package jp.co.sample.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import jp.co.sample.domain.Administrator;
 
 /**
- * administratorsテーブルを操作するリポジトリ
+ * administratorsテーブルを操作するリポジトリ.
  * 
  * @author nakamuratomoya
  *
@@ -23,7 +25,7 @@ public class AdministratorRepository {
 	private NamedParameterJdbcTemplate template;
 
 	/**
-	 * Administratorオブジェクトを生成するローマッパー
+	 * Administratorオブジェクトを生成するローマッパー.
 	 */
 	private static final RowMapper<Administrator> ADMINISTRATOR_ROW_MAPPER = (rs, i) -> {
 
@@ -38,7 +40,7 @@ public class AdministratorRepository {
 	};
 
 	/**
-	 * 渡した管理者情報を保存する
+	 * 渡した管理者情報を保存する.
 	 * 
 	 * @param administrator 管理者情報
 	 * @return 追加された管理者情報
@@ -54,7 +56,7 @@ public class AdministratorRepository {
 	}
 
 	/**
-	 * メールアドレスとパスワードから1件の管理者情報を取得する　(メールアドレスが一意のため)
+	 * メールアドレスとパスワードから1件の管理者情報を取得する　(メールアドレスが一意のため).<br>
 	 * また、1件も存在しない場合はnullを返す
 	 * 
 	 * @param mailAddress メールアドレス
@@ -66,13 +68,13 @@ public class AdministratorRepository {
 		String sql = "SELECT id, name, mail_address, password FROM administrators WHERE mail_address LIKE :mailAddress AND password LIKE :password ;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + mailAddress + "%")
 				.addValue("password", "%" + password + "%");
-		Administrator administrator = template.queryForObject(sql, param, ADMINISTRATOR_ROW_MAPPER);
+		List<Administrator> administratorList = template.query(sql, param, ADMINISTRATOR_ROW_MAPPER);
 
-		if (administrator == null) {
+		if (administratorList.size() == 0) {
 			return null;
 		}
 		
-		return administrator;
+		return administratorList.get(0);
 
 	}
 

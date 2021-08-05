@@ -3,7 +3,7 @@ package jp.co.sample.domain;
 import java.util.Date;
 
 /**
- * 従業員を表すドメイン
+ * 従業員を表すドメイン.
  * 
  * @author nakamuratomoya
  *
