@@ -2,7 +2,6 @@ package jp.co.sample.controller;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,7 @@ import jp.co.sample.form.UpdateEmployeeForm;
 import jp.co.sample.service.EmployeeService;
 
 /**
- * 従業員情報を検索や更新に使用する.
+ * 従業員情報を操作するコントローラー.
  * 
  * @author nakamuratomoya
  *
@@ -22,76 +21,72 @@ import jp.co.sample.service.EmployeeService;
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
-	
+
 	@Autowired
 	private EmployeeService employeeService;
-	
+
 	@ModelAttribute
 	public UpdateEmployeeForm setUpUpdateEmployeeForm() {
 		return new UpdateEmployeeForm();
 	}
-	
-	
+
 	/**
 	 * 従業員一覧を取得.
 	 * 
 	 * @param model requestスコープ
-	 * @return　従業員一覧
+	 * @return 従業員一覧
 	 */
 	@RequestMapping("/showList")
 	public String showList(Model model) {
-		
+
 		List<Employee> employeeList = employeeService.showList();
-		
+
 		model.addAttribute("employeeList", employeeList);
-		
+
 		return "/employee/list";
-		
+
 	}
-	
+
 	/**
 	 * 従業員詳細情報を取得.
 	 * 
-	 * @param id　従業員ID
-	 * @param model　requestスコープ
+	 * @param id    従業員ID
+	 * @param model requestスコープ
 	 * @return 従業員詳細情報
 	 */
 	@RequestMapping("/showDetail")
 	public String showDetail(String id, Model model) {
 
-		int id2 = Integer.parseInt(id);
-		
-		Employee employee = employeeService.showDetail(id2);
-		
+		int intId = Integer.parseInt(id);
+
+		Employee employee = employeeService.showDetail(intId);
+
 		model.addAttribute("employee", employee);
-		
+
 		return "/employee/detail";
-		
+
 	}
-	
+
 	/**
-	 * 従業員詳細の扶養人数の更新.
+	 * 従業員詳細の扶養人数のみ更新.
 	 * 
-	 * @return 扶養人数更新後の従業員詳細
+	 * @return 扶養人数更新後の従業員一覧
 	 */
 	@RequestMapping("/update")
 	public String update(UpdateEmployeeForm form) {
-		
-		int id2 = Integer.parseInt(form.getId());
-		
-		Employee employee = employeeService.showDetail(id2);
-		
-		String dependentsCount = String.valueOf( employee.getDependentsCount());
-		
-		form.setDependentsCount(dependentsCount);
-		
-		employeeService.Update(employee);
-		
+
+		System.out.println(form);
+		int intId = Integer.parseInt(form.getId());
+		Employee employee = employeeService.showDetail(intId);
+
+		int dependentsCount = Integer.parseInt(form.getDependentsCount());
+
+		employee.setDependentsCount(dependentsCount);
+
+		employeeService.update(employee);
+
 		return "redirect:/employee/showList";
-		
-		
+
 	}
-	
-	
 
 }

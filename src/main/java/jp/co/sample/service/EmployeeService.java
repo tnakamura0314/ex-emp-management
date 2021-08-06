@@ -48,7 +48,7 @@ public class EmployeeService {
 	 * 
 	 * @param employee 従業員
 	 */
-	public void Update(Employee employee) {
+	public void update(Employee employee) {
 		employeeRepository.update(employee);
 	}
 	
