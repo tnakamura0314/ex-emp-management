@@ -92,7 +92,7 @@ public class AdministratorController {
 		model.addAttribute("administrator", administrator);
 
 		if (administrator == null) {
-			model.addAttribute("administrator", "メールアドレスまたはパスワードが不正です。");
+			model.addAttribute("message", "メールアドレスまたはパスワードが不正です。");
 			return "administrator/login";
 		}
 
