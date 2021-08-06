@@ -75,12 +75,16 @@ public class EmployeeController {
 	 * @return 扶養人数更新後の従業員詳細
 	 */
 	@RequestMapping("/update")
-	public String update() {
+	public String update(UpdateEmployeeForm form) {
 		
-		Employee employee = new Employee();
-		employeeService.showDetail(employee.getId());
+		int id2 = Integer.parseInt(form.getId());
 		
-		employee.setDependentsCount(employee.getDependentsCount());
+		Employee employee = employeeService.showDetail(id2);
+		
+		String dependentsCount = String.valueOf( employee.getDependentsCount());
+		
+		form.setDependentsCount(dependentsCount);
+		
 		employeeService.Update(employee);
 		
 		return "redirect:/employee/showList";
