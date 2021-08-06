@@ -80,7 +80,7 @@ public class AdministratorController {
 	/**
 	 * ログイン後のページにユーザ名を表示するメソッド.
 	 * 
-	 * @param form ログイン時に使用するフォーム
+	 * @param form  ログイン時に使用するフォーム
 	 * @param model requestスコープ
 	 * @return 従業員情報一覧ページ
 	 */
@@ -90,16 +90,29 @@ public class AdministratorController {
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
 
 		model.addAttribute("administrator", administrator);
-		
-		if(administrator == null) {
+
+		if (administrator == null) {
 			model.addAttribute("administrator", "メールアドレスまたはパスワードが不正です。");
 			return "administrator/login";
 		}
-		
+
 		session.setAttribute("administratorName", administrator.getName());
-		
+
 		return "forward:/employee/showList";
-	
+
+	}
+
+	/**
+	 * ログアウトするメソッド.
+	 * 
+	 * @return ログイン画面
+	 */
+	@RequestMapping("/logout")
+	public String logout() {
+
+		session.invalidate();
+
+		return "redirect:/";
 	}
 
 }
